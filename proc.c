@@ -464,3 +464,19 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+int
+find(int pid)
+{
+  struct proc *p;
+
+  acquire(&ptable.lock);
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    if(p->pid == pid){
+      cprintf(" name : %s\n",p->name);
+      return p->pid;
+ 	   }
+	}
+      cprintf(" can't find : %d\n",p->pid);
+      return -1;
+}
