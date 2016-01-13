@@ -474,9 +474,11 @@ find(int pid)
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
     if(p->pid == pid){
       cprintf(" name : %s\n",p->name);
-      return p->pid;
+      release(&ptable.lock);
+      return 0;
  	   }
 	}
+  release(&ptable.lock);
       cprintf(" can't find : %d\n",p->pid);
       return -1;
 }

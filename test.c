@@ -8,7 +8,7 @@ int pid = getpid();
 for (i = 0; i < 10; ++i) {
         fork();
     }
-find(pid);
+    find(pid);
     wait();
 exit();
 
