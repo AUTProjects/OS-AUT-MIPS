@@ -456,3 +456,21 @@ int sys_saveprocess(void){
   return 0;
 }
 
+int sys_loadprocess(void){
+
+  int fd;
+  int process;
+  int* p;
+  struct file* f;
+  struct proc* pr;
+
+  argint(0,&process);
+  argfd(1,(void*)&fd,&f);
+  p = (int*)process;
+  pr = (struct proc*)(*p);
+  fileread(f,(char*)pr,sizeof(struct proc));
+  cprintf("%d",pr->pid);
+
+  return 0;
+}
+
