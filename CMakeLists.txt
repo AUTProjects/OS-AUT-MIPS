@@ -70,6 +70,6 @@ set(SOURCE_FILES
     vm.c
     wc.c
     x86.h
-    zombie.c)
+    zombie.c mysyscalls.c mysyscall.c mysyscall.h process.h test2.c)
 
 add_executable(xv6_public ${SOURCE_FILES})

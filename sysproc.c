@@ -7,6 +7,8 @@
 #include "mmu.h"
 #include "proc.h"
 
+
+
 int
 sys_fork(void)
 {
@@ -96,9 +98,17 @@ int
 sys_find(void)
 {
   int pid;
-
-  if(argint(0, &pid) < 0)
+  int adr;
+  argint(1,&adr);
+  if(argint(0, &pid) < 0 )
     return -1;
-  return find(pid);
+  return  find(pid,adr);
+
 }
 
+int sys_alloc(void)
+{
+  int pr;
+  argint(0,&pr);
+  return allocprocess(pr);
+}

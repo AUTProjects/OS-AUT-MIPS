@@ -1,6 +1,8 @@
 #include"types.h"
+#include "process.h"
 struct stat;
 struct rtcdate;
+struct process;
 
 // system calls
 int fork(void);
@@ -24,7 +26,10 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
-int find(int);
+int find(int,int);
+int saveprocess(int,int);
+int loadprocess(int,int);
+int allocprocess(int);
 
 // ulib.c
 int stat(char*, struct stat*);

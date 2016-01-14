@@ -6,6 +6,8 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "fcntl.h"
+
 
 struct {
   struct spinlock lock;
@@ -465,20 +467,29 @@ procdump(void)
   }
 }
 
-int
-find(int pid)
-{
-  struct proc *p;
 
-  acquire(&ptable.lock);
+
+
+int find(int pid, int adr){
+
+  struct proc *p;
+  int* adress = (int*)adr;
+  cprintf("start\n");
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
     if(p->pid == pid){
-      cprintf(" name : %s\n",p->name);
-      release(&ptable.lock);
+      *adress = (int)p;
       return 0;
- 	   }
-	}
-  release(&ptable.lock);
-      cprintf(" can't find : %d\n",p->pid);
-      return -1;
+    }
+  }
+
+  cprintf(" can't find : %d\n",p->pid);
+  return -1;
+
+}
+
+int allocprocess(int pr){
+  int* process = (int*)pr;
+  struct proc* p = allocproc();
+  *process = (int)p;
+  return 0;
 }

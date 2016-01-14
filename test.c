@@ -1,15 +1,14 @@
-#include"user.h"
 
+#include "user.h"
+#include "fcntl.h"
 
 int main(void){
 
-int i ;
-int pid = getpid();
-for (i = 0; i < 10; ++i) {
-        fork();
-    }
-    find(pid);
-    wait();
-exit();
+    int* pr = (int*)malloc(sizeof(int));
+    int fd = open("process",O_CREATE | O_RDWR);
+    find(getpid(),(int)pr);
+    saveprocess(*pr,fd);
+
+    exit();
 
 }

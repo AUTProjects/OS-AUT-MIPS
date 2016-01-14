@@ -154,3 +154,13 @@ filewrite(struct file *f, char *addr, int n)
   panic("filewrite");
 }
 
+int saveprocess(int pr,int fd){
+
+  return 0;
+
+}
+
+int loadprocess(int pr,int fd){
+
+  return 0;
+}

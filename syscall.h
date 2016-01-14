@@ -21,4 +21,7 @@
 #define SYS_mkdir  20
 #define SYS_close  21
 #define SYS_find   22
+#define SYS_saveprocess 23
+#define SYS_loadprocess 24
+#define SYS_allocprocess 25
 

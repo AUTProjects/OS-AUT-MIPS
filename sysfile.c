@@ -441,3 +441,18 @@ sys_pipe(void)
   return 0;
 }
 
+int sys_saveprocess(void){
+
+  int fd;
+  int process;
+  struct file* f;
+  struct proc* pr;
+
+  argint(0,&process);
+  argfd(1,(void*)&fd,&f);
+  pr = (struct proc*)process;
+  filewrite(f,(char*)pr,sizeof(struct proc));
+
+  return 0;
+}
+

@@ -8,6 +8,7 @@ struct rtcdate;
 struct spinlock;
 struct stat;
 struct superblock;
+struct  process;
 
 // bio.c
 void            binit(void);
@@ -118,7 +119,8 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
-int        		find(int);
+int      		find(int,int);
+int             allocprocess(int);
 
 // swtch.S
 void            swtch(struct context**, struct context*);
