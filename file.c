@@ -164,3 +164,8 @@ int loadprocess(int pr,int fd){
 
   return 0;
 }
+
+
+int savept(int pr,int fd){
+  return 0;
+}

@@ -474,18 +474,15 @@ int find(int pid, int adr){
 
   struct proc *p;
   int* adress = (int*)adr;
-  cprintf("start\n");
+  acquire(&ptable.lock);
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
     if(p->parent->pid == pid){
       *adress = (int)p;
-      acquire(&ptable.lock);
-      p->state = SLEEPING;
       release(&ptable.lock);
-      p->killed = 1;
       return 0;
     }
   }
-
+  release(&ptable.lock);
   cprintf(" can't find : %d\n",p->pid);
   return -1;
 
@@ -504,12 +501,7 @@ int
 start(int pr,int parent)
 {
   struct  proc* p = (struct proc*)pr;
-  int pid= fork();
-  if(pid != 0) {
-    proc->kstack = p->kstack;
-    exec2(p->name,pr);
-  }else
-  wait();
+  exec2(p->name,pr);
   return  0;
 
 }

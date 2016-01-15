@@ -452,7 +452,6 @@ int sys_saveprocess(void){
   argfd(1,(void*)&fd,&f);
   pr = (struct proc*)process;
   filewrite(f,(char*)pr,sizeof(struct proc));
-  cprintf("1->%d\n",pr->cwd->flags);
   return 0;
 }
 
@@ -469,9 +468,25 @@ int sys_loadprocess(void){
   p = (int*)process;
   pr = (struct proc*)(*p);
   fileread(f,(char*)pr,sizeof(struct proc));
+  return 0;
+}
 
-  //cprintf("2->%d\n",pr->cwd->flags);
+int sys_savept(void){
 
+  int fd;
+  int process;
+  int* p;
+  struct file* f;
+  struct proc* pr;
+  char* pages;
+
+  argint(0,&process);
+  argfd(1,(void*)&fd,&f);
+  p = (int*)process;
+  pr = (struct proc*)(*p);
+  pages = copypt(pr->pgdir,pr->sz);
+  cprintf("pages:%s\n",pages);
+  fileread(f,pages,sizeof(struct proc));
   return 0;
 }
 

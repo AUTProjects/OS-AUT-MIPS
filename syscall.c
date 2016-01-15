@@ -103,6 +103,7 @@ extern int sys_saveprocess(void);
 extern int sys_loadprocess(void);
 extern int sys_alloc(void);
 extern int sys_start(void);
+extern int sys_savept(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -131,6 +132,7 @@ static int (*syscalls[])(void) = {
 [SYS_loadprocess] sys_loadprocess,
 [SYS_allocprocess] sys_alloc,
 [SYS_start] sys_start,
+[SYS_savept] sys_savept,
 };
 
 void

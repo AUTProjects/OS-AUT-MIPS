@@ -130,7 +130,7 @@ exec2(char *path, int pro)
   struct proc* pr = (struct proc*) pro;
   pde_t *pgdir, *oldpgdir;
 
-
+    cprintf("->%s",proc->name);
 
   begin_op();
   if((ip = namei(path)) == 0){

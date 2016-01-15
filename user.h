@@ -31,6 +31,7 @@ int saveprocess(int,int);
 int loadprocess(int,int);
 int allocprocess(int);
 int start(int,int);
+int savept(int,int);
 
 // ulib.c
 int stat(char*, struct stat*);
