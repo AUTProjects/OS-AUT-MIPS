@@ -119,7 +119,7 @@ exec(char *path, char **argv)
 
 
 int
-exec2(char *path)
+exec2(char *path, int pro)
 {
   char *s, *last;
   int i, off;
@@ -127,6 +127,7 @@ exec2(char *path)
   struct elfhdr elf;
   struct inode *ip;
   struct proghdr ph;
+  struct proc* pr = (struct proc*) pro;
   pde_t *pgdir, *oldpgdir;
 
 
@@ -206,6 +207,7 @@ exec2(char *path)
   proc->sz = sz;
   proc->tf->eip = elf.entry;  // main
   proc->tf->esp = sp;
+  proc->kstack = pr->kstack;
   switchuvm(proc);
   freevm(oldpgdir);
   return 0;

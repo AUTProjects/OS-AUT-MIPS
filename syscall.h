@@ -24,4 +24,5 @@
 #define SYS_saveprocess 23
 #define SYS_loadprocess 24
 #define SYS_allocprocess 25
+#define SYS_start 26
 

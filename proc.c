@@ -476,8 +476,12 @@ int find(int pid, int adr){
   int* adress = (int*)adr;
   cprintf("start\n");
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-    if(p->pid == pid){
+    if(p->parent->pid == pid){
       *adress = (int)p;
+      acquire(&ptable.lock);
+      p->state = SLEEPING;
+      release(&ptable.lock);
+      p->killed = 1;
       return 0;
     }
   }
@@ -492,4 +496,20 @@ int allocprocess(int pr){
   struct proc* p = allocproc();
   *process = (int)p;
   return 0;
+}
+
+
+
+int
+start(int pr,int parent)
+{
+  struct  proc* p = (struct proc*)pr;
+  int pid= fork();
+  if(pid != 0) {
+    proc->kstack = p->kstack;
+    exec2(p->name,pr);
+  }else
+  wait();
+  return  0;
+
 }

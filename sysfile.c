@@ -452,7 +452,7 @@ int sys_saveprocess(void){
   argfd(1,(void*)&fd,&f);
   pr = (struct proc*)process;
   filewrite(f,(char*)pr,sizeof(struct proc));
-
+  cprintf("1->%d\n",pr->cwd->flags);
   return 0;
 }
 
@@ -469,7 +469,8 @@ int sys_loadprocess(void){
   p = (int*)process;
   pr = (struct proc*)(*p);
   fileread(f,(char*)pr,sizeof(struct proc));
-  cprintf("%d",pr->pid);
+
+  //cprintf("2->%d\n",pr->cwd->flags);
 
   return 0;
 }
