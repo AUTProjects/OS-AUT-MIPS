@@ -13,17 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5041c437-ad31-4ec6-8805-98d9bc8bc1d0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/defs.h" afterPath="$PROJECT_DIR$/defs.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/exec.c" afterPath="$PROJECT_DIR$/exec.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/file.c" afterPath="$PROJECT_DIR$/file.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proc.c" afterPath="$PROJECT_DIR$/proc.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syscall.c" afterPath="$PROJECT_DIR$/syscall.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syscall.h" afterPath="$PROJECT_DIR$/syscall.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sysfile.c" afterPath="$PROJECT_DIR$/sysfile.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.c" afterPath="$PROJECT_DIR$/test.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test2.c" afterPath="$PROJECT_DIR$/test2.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user.h" afterPath="$PROJECT_DIR$/user.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usys.S" afterPath="$PROJECT_DIR$/usys.S" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vm.c" afterPath="$PROJECT_DIR$/vm.c" />
     </list>
     <ignored path="xv6-public.iws" />
@@ -65,20 +54,18 @@
         <entry file="file://$PROJECT_DIR$/test.c">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="18" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="18" />
+              <caret line="19" column="12" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="exec.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/exec.c">
+      <file leaf-file-name="file.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/file.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.612903">
-              <caret line="209" column="0" selection-start-line="209" selection-start-column="0" selection-end-line="209" selection-end-column="28" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="168" column="4" selection-start-line="168" selection-start-column="4" selection-end-line="168" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -117,7 +104,7 @@
         <entry file="file://$PROJECT_DIR$/sysfile.c">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="473" column="14" selection-start-line="473" selection-start-column="4" selection-end-line="473" selection-end-column="14" />
+              <caret line="486" column="13" selection-start-line="486" selection-start-column="13" selection-end-line="486" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -146,8 +133,8 @@
       <file leaf-file-name="vm.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vm.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6809211">
-              <caret line="399" column="23" selection-start-line="399" selection-start-column="23" selection-end-line="399" selection-end-column="23" />
+            <state vertical-scroll-proportion="-0.24342105">
+              <caret line="318" column="34" selection-start-line="318" selection-start-column="34" selection-end-line="318" selection-end-column="34" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -303,12 +290,18 @@
       <option name="project" value="LOCAL" />
       <updated>1452858799848</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="start saving page table">
+      <created>1452867255205</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1452867255205</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1295" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1273585" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -319,7 +312,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985073" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39103556" sideWeight="0.49382716" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39103556" sideWeight="0.49382716" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -346,7 +339,8 @@
     <MESSAGE value="load process added&#10;" />
     <MESSAGE value="losed :(" />
     <MESSAGE value="lose again :((" />
-    <option name="LAST_COMMIT_MESSAGE" value="lose again :((" />
+    <MESSAGE value="start saving page table" />
+    <option name="LAST_COMMIT_MESSAGE" value="start saving page table" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -664,20 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/proc.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="470" column="0" selection-start-line="470" selection-start-column="0" selection-end-line="470" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#6846#7016#0" expanded="false" />
-            <element signature="e#8344#8615#0" expanded="false" />
-            <element signature="e#8617#8754#0" expanded="false" />
-            <element signature="e#9239#10119#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/exec.c">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.612903">
@@ -709,16 +689,8 @@
         <state vertical-scroll-proportion="0.649919">
           <caret line="115" column="4" selection-start-line="115" selection-start-column="4" selection-end-line="115" selection-end-column="4" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sysfile.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="473" column="14" selection-start-line="473" selection-start-column="4" selection-end-line="473" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -738,26 +710,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/file.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6043956">
-          <caret line="168" column="4" selection-start-line="168" selection-start-column="4" selection-end-line="168" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/user.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="18" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="18" />
           <folding />
         </state>
       </provider>
@@ -770,10 +726,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/proc.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="470" column="0" selection-start-line="470" selection-start-column="0" selection-end-line="470" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#6846#7016#0" expanded="false" />
+            <element signature="e#8344#8615#0" expanded="false" />
+            <element signature="e#8617#8754#0" expanded="false" />
+            <element signature="e#9239#10119#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/file.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="168" column="4" selection-start-line="168" selection-start-column="4" selection-end-line="168" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="12" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sysfile.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="486" column="13" selection-start-line="486" selection-start-column="13" selection-end-line="486" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/vm.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6809211">
-          <caret line="399" column="23" selection-start-line="399" selection-start-column="23" selection-end-line="399" selection-end-column="23" />
+        <state vertical-scroll-proportion="-0.24342105">
+          <caret line="318" column="34" selection-start-line="318" selection-start-column="34" selection-end-line="318" selection-end-column="34" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

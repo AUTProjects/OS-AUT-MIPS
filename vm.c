@@ -389,7 +389,7 @@ copypt(pde_t *pgdir, uint sz)
 {
   pde_t *d;
   pte_t *pte;
-  uint  i;
+  uint  i,pa;
   char *mem;
 
   if((d = setupkvm()) == 0)
@@ -400,9 +400,10 @@ copypt(pde_t *pgdir, uint sz)
     if(!(*pte & PTE_P))
       panic("copyuvm: page not present");
 
-    if((mem = kalloc()) == 0);
+
 
   }
-  return mem;
+  pa = PTE_ADDR(*pte);
+  return (char*)p2v(pa);
 
 }
