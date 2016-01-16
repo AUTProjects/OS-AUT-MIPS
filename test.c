@@ -24,12 +24,13 @@ int main(void){
         find(getpid(),(int)pr);
         saveprocess(*pr,fd_process,fd_pages,fd_cwd,fd_flags,fd_tf);
         printf(1,"process saved\n");
+        wait();
         //  allocprocess((int)p);
        // loadprocess((int)p,fd);
       //  start(*p,getpid());
     }
 
-    wait();
+
     exit();
 
 }

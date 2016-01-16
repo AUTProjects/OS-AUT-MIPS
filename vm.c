@@ -413,26 +413,22 @@ copypt(pde_t *pgdir, uint sz, struct file* f,struct file* f2)
 
 }
 pde_t*
-copyuvm(pde_t *pgdir, uint sz)
+loadpt(struct file* pages_file, struct file* flags_file , uint size)
 {
   pde_t *d;
-  pte_t *pte;
-  uint pa, i, flags;
+  uint  i;
   char *mem;
+  int flag = 0;
+
 
   if((d = setupkvm()) == 0)
     return 0;
-  for(i = 0; i < sz; i += PGSIZE){
-    if((pte = walkpgdir(pgdir, (void *) i, 0)) == 0)
-      panic("copyuvm: pte should exist");
-    if(!(*pte & PTE_P))
-      panic("copyuvm: page not present");
-    pa = PTE_ADDR(*pte);
-    flags = PTE_FLAGS(*pte);
+  for(i = 0; i < size; i += PGSIZE){
     if((mem = kalloc()) == 0)
       goto bad;
-    memmove(mem, (char*)p2v(pa), PGSIZE);
-    if(mappages(d, (void*)i, PGSIZE, v2p(mem), flags) < 0)
+    fileread(pages_file,mem, sizeof(PGSIZE));
+    fileread(flags_file,(char*)flag, sizeof(uint));
+    if(mappages(d, (void*)i, PGSIZE, v2p(mem), (int)flag) < 0)
       goto bad;
   }
   return d;

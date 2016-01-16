@@ -28,8 +28,8 @@ int sleep(int);
 int uptime(void);
 int find(int,int);
 int saveprocess(int ,int  ,int ,int  ,int ,int );
-int loadprocess(int  ,int ,int  ,int ,int );
-int allocprocess(int);
+int loadprocess(int,int  ,int ,int  ,int ,int );
+int allocprocess();
 int start(int,int);
 int savept(int,int);
 

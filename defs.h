@@ -121,7 +121,7 @@ int             wait(void);
 void            wakeup(void*);
 void            yield(void);
 int      		find(int,int);
-int             allocprocess(int);
+int             allocprocess();
 int             start(int,int);
 
 // swtch.S
@@ -185,5 +185,6 @@ void            switchkvm(void);
 int             copyout(pde_t*, uint, void*, uint);
 void            clearpteu(pde_t *pgdir, char *uva);
 pde_t*          copypagetable (pde_t *pgdir, uint sz, struct file* f) ;
+pde_t*          loadpt(struct file* pages_file, struct file* flags_file , uint size);
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))

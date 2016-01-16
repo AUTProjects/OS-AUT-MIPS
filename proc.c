@@ -490,25 +490,33 @@ int find(int pid, int adr){
 
 }
 
-int allocprocess(int pr){
-  int* process = (int*)pr;
+int allocprocess(){
+
   struct proc* p = allocproc();
-  *process = (int)p;
-  return 0;
+  return (int)p;
 }
 
 
 
-int
-start(int pr,int parent)
-{
-  struct  proc* p = (struct proc*)pr;
-  exec2("test",(int)p);
 
+int
+start( int p,int p2)
+{
+  int i;
+  struct  proc* pr;
+  struct  proc* np = allocproc();
+
+  np->tf->eax = 0;
+
+  for(i = 0; i < NOFILE; i++)
+    if(proc->ofile[i])
+      np->ofile[i] = filedup(proc->ofile[i]);
+
+
+  // lock to force the compiler to emit the np->state write last.
   acquire(&ptable.lock);
-  p->state = RUNNABLE;
+  np->state = RUNNABLE;
   release(&ptable.lock);
 
-  return  0;
-
+  return 0;
 }

@@ -108,9 +108,8 @@ sys_find(void)
 
 int sys_alloc(void)
 {
-  int pr;
-  argint(0,&pr);
-  return allocprocess(pr);
+
+  return allocprocess();
 }
 
 int sys_start(void){

@@ -459,25 +459,30 @@ int sys_loadprocess(void){
   struct file* f_flags;
   struct file* f_tf;
 
-  pr = (struct proc*) process;
 
-  argfd(0,(void*)&fd_process,&f_process);
-  argfd(1,(void*)&fd_pages,&f_pages);
-  argfd(2,(void*)&fd_cwd,&f_cwd);
-  argfd(3,(void*)&fd_flags,&f_flags);
-  argfd(4,(void*)&fd_tf,&f_tf);
+  argint(0,&process);
+  argfd(1,(void*)&fd_process,&f_process);
+  argfd(2,(void*)&fd_pages,&f_pages);
+  argfd(3,(void*)&fd_cwd,&f_cwd);
+  argfd(4,(void*)&fd_flags,&f_flags);
+  argfd(5,(void*)&fd_tf,&f_tf);
+
 
   pr = (struct proc*)process;
-  cprintf("saving process : %d\n",pr->pid);
+  cprintf("loading process : %d\n",pr->pid);
 
   fileread(f_process,(char*)pr,sizeof(struct proc));
   fileread(f_cwd,(char*)pr->cwd,sizeof(struct inode));
   fileread(f_tf,(char*)pr->tf,sizeof(struct trapframe));
 
-  copypagetable(pr->pgdir,pr->sz,f_pages,f_flags);
+  pr->pgdir = loadpt( f_pages, f_flags, f_pages->ip->size);
+  pr->parent = proc;
 
-  exit();
-  return 0;
+
+  cprintf("process loaded\n");
+
+
+  return (int)pr;
 }
 
 int sys_savept(void){
@@ -531,6 +536,23 @@ int sys_saveprocess(void){
   filewrite(f_tf,(char*)pr->tf,sizeof(struct trapframe));
 
   copypt(pr->pgdir,pr->sz,f_pages,f_flags);
+
+  pr->ofile[1] = 0;
+  pr->ofile[2] = 0;
+  pr->ofile[3] = 0;
+  pr->ofile[4] = 0;
+  pr->ofile[5] = 0;
+  pr->ofile[6] = 0;
+  pr->ofile[7] = 0;
+  pr->ofile[8] = 0;
+  pr->ofile[9] = 0;
+  pr->ofile[10] = 0;
+  pr->ofile[11] = 0;
+  pr->ofile[12] = 0;
+  pr->ofile[13] = 0;
+  pr->ofile[14] = 0;
+  pr->ofile[15] = 0;
+  pr->ofile[16] = 0;
 
   exit();
   return 0;
