@@ -11,14 +11,15 @@ int main(void){
 
     if(pid == 0){
         for(;i<100;i++){
-            printf(1,"child : %d\n",i);
+        //    printf(1,"child : %d\n",i);
         }
     }else{
-        sleep(1);
+      //  sleep(1);
         find(getpid(),(int)pr);
-        saveprocess(*pr,fd);
         savept(*pr,fd);
-      //  allocprocess((int)p);
+        printf(1,"process saved\n");
+        saveprocess(*pr,fd);
+        //  allocprocess((int)p);
        // loadprocess((int)p,fd);
       //  start(*p,getpid());
     }

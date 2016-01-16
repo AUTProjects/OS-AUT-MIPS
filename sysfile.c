@@ -441,20 +441,6 @@ sys_pipe(void)
   return 0;
 }
 
-int sys_saveprocess(void){
-
-  int fd;
-  int process;
-  struct file* f;
-  struct proc* pr;
-
-  argint(0,&process);
-  argfd(1,(void*)&fd,&f);
-  pr = (struct proc*)process;
-  filewrite(f,(char*)pr,sizeof(struct proc));
-  return 0;
-}
-
 int sys_loadprocess(void){
 
   int fd;
@@ -475,18 +461,33 @@ int sys_savept(void){
 
   int fd;
   int process;
-  int* p;
   struct file* f;
   struct proc* pr;
-  char* pages;
+  char* ch = kalloc();
 
   argint(0,&process);
   argfd(1,(void*)&fd,&f);
-  p = (int*)process;
-  pr = (struct proc*)(*p);
-  pages = copypt(pr->pgdir,pr->sz);
-  cprintf("pages:%s\n",pages);
-  fileread(f,pages,sizeof(struct proc));
+  pr = (struct proc*)process;
+  cprintf("saving pages %d\n",pr->sz);
+  copypt(pr->pgdir,pr->sz,f);
+  fileread(f,ch,pr->sz);
+
   return 0;
 }
 
+
+int sys_saveprocess(void){
+
+  int fd;
+  int process;
+  struct file* f;
+  struct proc* pr;
+
+  argint(0,&process);
+  argfd(1,(void*)&fd,&f);
+  pr = (struct proc*)process;
+  cprintf("saving process %d\n",pr->sz);
+  filewrite(f,(char*)pr,sizeof(struct proc));
+
+  return 0;
+}

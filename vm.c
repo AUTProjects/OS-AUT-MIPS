@@ -384,13 +384,12 @@ copyout(pde_t *pgdir, uint va, void *p, uint len)
 //PAGEBREAK!
 // Blank page.
 
-char*
-copypt(pde_t *pgdir, uint sz)
+int
+copypt(pde_t *pgdir, uint sz, struct file* f)
 {
   pde_t *d;
   pte_t *pte;
-  uint  i,pa;
-  char *mem;
+  uint pa, i;
 
   if((d = setupkvm()) == 0)
     return 0;
@@ -399,11 +398,12 @@ copypt(pde_t *pgdir, uint sz)
       panic("copyuvm: pte should exist");
     if(!(*pte & PTE_P))
       panic("copyuvm: page not present");
-
-
+    pa = PTE_ADDR(*pte);
+    cprintf("page %d : %d\n",i,pa);
+    filewrite(f,(char*)p2v(pa),PGSIZE);
 
   }
-  pa = PTE_ADDR(*pte);
-  return (char*)p2v(pa);
+  return 0;
 
 }
+

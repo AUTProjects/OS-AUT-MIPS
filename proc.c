@@ -479,6 +479,8 @@ int find(int pid, int adr){
     if(p->parent->pid == pid){
       *adress = (int)p;
       release(&ptable.lock);
+      cprintf("process found \nprocess name : %s\nprocess pid : %d\nprocess sz : %d\nprocess paget : %d\n",
+      p->name,p->pid,p->sz,p->pgdir);
       return 0;
     }
   }
