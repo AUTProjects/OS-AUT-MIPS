@@ -8,7 +8,7 @@ int main(void){
 
     int fd_process = open("process",O_CREATE | O_RDWR);
     int fd_pages = open("pages",O_CREATE | O_RDWR);
-    int fd_cwd = open("cwd",O_CREATE | O_RDWR);
+    int fd_context = open("context",O_CREATE | O_RDWR);
     int fd_flags = open("flags",O_CREATE | O_RDWR);
     int fd_tf = open("tf",O_CREATE | O_RDWR);
 
@@ -22,7 +22,7 @@ int main(void){
     }else{
       //  sleep(1);
         find(getpid(),(int)pr);
-        saveprocess(*pr,fd_process,fd_pages,fd_cwd,fd_flags,fd_tf);
+        saveprocess(*pr,fd_process,fd_pages,fd_context,fd_flags,fd_tf);
         printf(1,"process saved\n");
         wait();
         //  allocprocess((int)p);

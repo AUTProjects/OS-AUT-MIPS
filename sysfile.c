@@ -446,41 +446,43 @@ int sys_loadprocess(void){
 
   int fd_process ;
   int fd_pages;
-  int fd_cwd ;
   int fd_flags ;
   int fd_tf ;
+  int fd_context;
 
   int process;
-  struct proc* pr;
 
   struct file* f_process;
   struct file* f_pages;
-  struct file* f_cwd;
   struct file* f_flags;
   struct file* f_tf;
+  struct  file* f_context;
 
 
   argint(0,&process);
   argfd(1,(void*)&fd_process,&f_process);
   argfd(2,(void*)&fd_pages,&f_pages);
-  argfd(3,(void*)&fd_cwd,&f_cwd);
-  argfd(4,(void*)&fd_flags,&f_flags);
-  argfd(5,(void*)&fd_tf,&f_tf);
+  argfd(3,(void*)&fd_flags,&f_flags);
+  argfd(4,(void*)&fd_tf,&f_tf);
+  argfd(5,(void*)&fd_context,&f_context);
 
-
-  pr = (struct proc*)process;
-  cprintf("loading process : %d\n",pr->pid);
+   struct  proc* pr = (struct proc*)process;
 
   fileread(f_process,(char*)pr,sizeof(struct proc));
-  fileread(f_cwd,(char*)pr->cwd,sizeof(struct inode));
-  fileread(f_tf,(char*)pr->tf,sizeof(struct trapframe));
+
+  cprintf("loading process : %d\n",pr->pid);
+
+  struct trapframe tf;
+  fileread(f_tf,(char*)&tf,sizeof(struct trapframe));
+
+  struct context cn;
+  fileread(f_context,(char*)&cn,sizeof(struct context));
 
   pr->pgdir = loadpt( f_pages, f_flags, f_pages->ip->size);
-  pr->parent = proc;
-
+  *pr->tf = tf;
+  *pr->context = cn;
 
   cprintf("process loaded\n");
-
 
   return (int)pr;
 }
@@ -508,14 +510,14 @@ int sys_saveprocess(void){
 
   int fd_process ;
   int fd_pages;
-  int fd_cwd ;
+  int fd_context ;
   int fd_flags ;
   int fd_tf ;
   int process;
 
   struct file* f_process;
   struct file* f_pages;
-  struct file* f_cwd;
+  struct file* f_context;
   struct file* f_flags;
   struct file* f_tf;
 
@@ -524,7 +526,7 @@ int sys_saveprocess(void){
   argint(0,&process);
   argfd(1,(void*)&fd_process,&f_process);
   argfd(2,(void*)&fd_pages,&f_pages);
-  argfd(3,(void*)&fd_cwd,&f_cwd);
+  argfd(3,(void*)&fd_context,&f_context);
   argfd(4,(void*)&fd_flags,&f_flags);
   argfd(5,(void*)&fd_tf,&f_tf);
 
@@ -532,7 +534,7 @@ int sys_saveprocess(void){
   cprintf("saving process : %d\n",pr->pid);
 
   filewrite(f_process,(char*)pr,sizeof(struct proc));
-  filewrite(f_cwd,(char*)pr->cwd,sizeof(struct inode));
+  filewrite(f_context,(char*)pr->cwd,sizeof(struct context));
   filewrite(f_tf,(char*)pr->tf,sizeof(struct trapframe));
 
   copypt(pr->pgdir,pr->sz,f_pages,f_flags);

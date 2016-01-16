@@ -502,21 +502,28 @@ int allocprocess(){
 int
 start( int p,int p2)
 {
-  int i;
-  struct  proc* pr;
+  int i,pid;
+  struct  proc* pr = (struct proc*)p;
   struct  proc* np = allocproc();
 
+  *np->context = *pr->context;
+  np->context->eip = (uint)forkret;
+  np->pgdir = pr->pgdir;
+  np->sz = pr->sz;
+  np->parent = proc;
+  *np->tf = *pr->tf;
   np->tf->eax = 0;
 
   for(i = 0; i < NOFILE; i++)
     if(proc->ofile[i])
       np->ofile[i] = filedup(proc->ofile[i]);
 
-
+  safestrcpy(np->name,pr->name, sizeof(pr->name));
+  pid = np->pid;
   // lock to force the compiler to emit the np->state write last.
   acquire(&ptable.lock);
   np->state = RUNNABLE;
   release(&ptable.lock);
 
-  return 0;
+  return pid;
 }
