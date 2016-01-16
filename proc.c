@@ -504,6 +504,7 @@ start(int pr,int parent)
 {
   struct  proc* p = (struct proc*)pr;
   exec2(p->name,pr);
+
   return  0;
 
 }

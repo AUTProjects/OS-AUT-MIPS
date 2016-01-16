@@ -6,17 +6,18 @@ int main(void){
 
     int* pr = (int*)malloc(sizeof(int));
     int fd = open("process",O_CREATE | O_RDWR);
+    int fd2 = open("pages",O_CREATE | O_RDWR);
     int i = 0;
     int pid = fork();
 
     if(pid == 0){
         for(;i<100;i++){
-        //    printf(1,"child : %d\n",i);
+           // printf(1,"child : %d\n",i);
         }
     }else{
       //  sleep(1);
         find(getpid(),(int)pr);
-        savept(*pr,fd);
+        savept(*pr,fd2);
         printf(1,"process saved\n");
         saveprocess(*pr,fd);
         //  allocprocess((int)p);

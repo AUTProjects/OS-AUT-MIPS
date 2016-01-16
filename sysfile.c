@@ -444,16 +444,23 @@ sys_pipe(void)
 int sys_loadprocess(void){
 
   int fd;
+  int fd2;
   int process;
   int* p;
   struct file* f;
+  struct file* f2;
   struct proc* pr;
+
 
   argint(0,&process);
   argfd(1,(void*)&fd,&f);
+  argfd(2,(void*)&fd2,&f2);
   p = (int*)process;
   pr = (struct proc*)(*p);
   fileread(f,(char*)pr,sizeof(struct proc));
+  cprintf("page file size : %d\n",f2->ip->size);
+  copypagetable(pr->pgdir,pr->sz,f2);
+  cprintf("pages loaded");
   return 0;
 }
 
@@ -463,14 +470,13 @@ int sys_savept(void){
   int process;
   struct file* f;
   struct proc* pr;
-  char* ch = kalloc();
 
   argint(0,&process);
   argfd(1,(void*)&fd,&f);
   pr = (struct proc*)process;
   cprintf("saving pages %d\n",pr->sz);
   copypt(pr->pgdir,pr->sz,f);
-  fileread(f,ch,pr->sz);
+  cprintf("file size : %d\n",f->ip->size);
 
   return 0;
 }

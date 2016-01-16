@@ -160,7 +160,7 @@ int saveprocess(int pr,int fd){
 
 }
 
-int loadprocess(int pr,int fd){
+int loadprocess(int pr,int fd,int fd2){
 
   return 0;
 }

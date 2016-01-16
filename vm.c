@@ -407,3 +407,21 @@ copypt(pde_t *pgdir, uint sz, struct file* f)
 
 }
 
+pde_t*
+copypagetable (pde_t *pgdir, uint sz, struct file* f) {
+
+  uint i, flags;
+  char *mem;
+
+  for (i = 0; i < sz; i += PGSIZE) {
+    mem = kalloc();
+    flags = PTE_FLAGS(*pgdir);
+    fileread(f, mem, PGSIZE);
+    cprintf("page %d loaded %s\n", i, mem);
+    mappages(pgdir, (void *) i, PGSIZE, v2p(mem), flags);
+
+  }
+
+  return 0;
+
+}
