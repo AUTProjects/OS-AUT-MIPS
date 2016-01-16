@@ -514,9 +514,12 @@ start( int p,int p2)
   *np->tf = *pr->tf;
   np->tf->eax = 0;
 
-  for(i = 0; i < NOFILE; i++)
-    if(proc->ofile[i])
-      np->ofile[i] = filedup(proc->ofile[i]);
+  cprintf("start restore process");
+  for(i = 0; i < NOFILE; i++) {
+    np->ofile[i] = filedup(proc->ofile[i]);
+    if(proc->ofile[i]) {
+    }
+  }
 
   safestrcpy(np->name,pr->name, sizeof(pr->name));
   pid = np->pid;
