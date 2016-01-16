@@ -502,8 +502,9 @@ int allocprocess(int pr){
 int
 start(int pr,int parent)
 {
-  struct  proc* p = (struct proc*)pr;
-  exec2(p->name,pr);
+  struct  proc* p = allocproc();
+          ;//= (struct proc*)pr;
+  exec2("test",(int)p);
 
   return  0;
 

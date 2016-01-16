@@ -121,16 +121,17 @@ exec(char *path, char **argv)
 int
 exec2(char *path, int pro)
 {
-  char *s, *last;
+
+
   int i, off;
   uint  sz, sp, ustack[3+MAXARG+1];
   struct elfhdr elf;
   struct inode *ip;
   struct proghdr ph;
   struct proc* pr = (struct proc*) pro;
-  pde_t *pgdir, *oldpgdir;
+  pde_t *pgdir;
 
-    cprintf("->%s",proc->name);
+
 
   begin_op();
   if((ip = namei(path)) == 0){
@@ -139,7 +140,7 @@ exec2(char *path, int pro)
   }
 
   ilock(ip);
-  pgdir = 0;
+
   // Check ELF header
   if(readi(ip, (char*)&elf, 0, sizeof(elf)) < sizeof(elf)) {
     goto bad;
@@ -162,9 +163,6 @@ exec2(char *path, int pro)
       continue;
     }
     if(ph.memsz < ph.filesz) {
-      goto bad;
-    }
-    if((sz = allocuvm(pgdir, sz, ph.vaddr + ph.memsz)) == 0) {
       goto bad;
     }
     if(loaduvm(pgdir, (char*)ph.vaddr, ip, ph.off, ph.filesz) < 0) {
@@ -195,21 +193,11 @@ exec2(char *path, int pro)
   if(copyout(pgdir, sp, ustack, (3+0+1)*4) < 0)
     goto bad;
 
-  // Save program name for debugging.
-  for(last=s=path; *s; s++)
-    if(*s == '/')
-      last = s+1;
-  safestrcpy(proc->name, last, sizeof(proc->name));
+
+  safestrcpy(proc->name, pr->name, sizeof(proc->name));
 
   // Commit to the user image.
-  oldpgdir = proc->pgdir;
-  proc->pgdir = pgdir;
-  proc->sz = sz;
-  proc->tf->eip = elf.entry;  // main
-  proc->tf->esp = sp;
-  proc->kstack = pr->kstack;
-  switchuvm(proc);
-  freevm(oldpgdir);
+
   return 0;
 
   bad:
