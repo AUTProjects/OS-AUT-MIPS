@@ -13,6 +13,7 @@
 #include "fs.h"
 #include "file.h"
 #include "fcntl.h"
+#include "x86.h"
 
 // Fetch the nth word-sized system call argument as a file descriptor
 // and return both the descriptor and the corresponding struct file.
@@ -443,40 +444,56 @@ sys_pipe(void)
 
 int sys_loadprocess(void){
 
-  int fd;
-  int fd2;
+  int fd_process ;
+  int fd_pages;
+  int fd_cwd ;
+  int fd_flags ;
+  int fd_tf ;
+
   int process;
-  int* p;
-  struct file* f;
-  struct file* f2;
   struct proc* pr;
 
+  struct file* f_process;
+  struct file* f_pages;
+  struct file* f_cwd;
+  struct file* f_flags;
+  struct file* f_tf;
 
-  argint(0,&process);
-  argfd(1,(void*)&fd,&f);
-  argfd(2,(void*)&fd2,&f2);
-  p = (int*)process;
-  pr = (struct proc*)(*p);
-  fileread(f,(char*)pr,sizeof(struct proc));
-  cprintf("page file size : %d\n",f2->ip->size);
-  copypagetable(pr->pgdir,pr->sz,f2);
-  cprintf("pages loaded");
+  pr = (struct proc*) process;
+
+  argfd(0,(void*)&fd_process,&f_process);
+  argfd(1,(void*)&fd_pages,&f_pages);
+  argfd(2,(void*)&fd_cwd,&f_cwd);
+  argfd(3,(void*)&fd_flags,&f_flags);
+  argfd(4,(void*)&fd_tf,&f_tf);
+
+  pr = (struct proc*)process;
+  cprintf("saving process : %d\n",pr->pid);
+
+  fileread(f_process,(char*)pr,sizeof(struct proc));
+  fileread(f_cwd,(char*)pr->cwd,sizeof(struct inode));
+  fileread(f_tf,(char*)pr->tf,sizeof(struct trapframe));
+
+  copypagetable(pr->pgdir,pr->sz,f_pages,f_flags);
+
+  exit();
   return 0;
 }
 
 int sys_savept(void){
 
-  int fd;
-  int process;
-  struct file* f;
-  struct proc* pr;
+//  int fd;
+//  int process;
+//  struct file* f;
+//  struct proc* pr;
 
-  argint(0,&process);
-  argfd(1,(void*)&fd,&f);
-  pr = (struct proc*)process;
-  cprintf("saving pages %d\n",pr->sz);
-  copypt(pr->pgdir,pr->sz,f);
-  cprintf("file size : %d\n",f->ip->size);
+//  argint(0,&process);
+//  argfd(1,(void*)&fd,&f);
+//  pr = (struct proc*)process;
+
+//  cprintf("saving pages %d\n",pr->sz);
+//  copypt(pr->pgdir,pr->sz,f);
+//  cprintf("file size : %d\n",f->ip->size);
 
   return 0;
 }
@@ -484,16 +501,37 @@ int sys_savept(void){
 
 int sys_saveprocess(void){
 
-  int fd;
+  int fd_process ;
+  int fd_pages;
+  int fd_cwd ;
+  int fd_flags ;
+  int fd_tf ;
   int process;
-  struct file* f;
+
+  struct file* f_process;
+  struct file* f_pages;
+  struct file* f_cwd;
+  struct file* f_flags;
+  struct file* f_tf;
+
   struct proc* pr;
 
   argint(0,&process);
-  argfd(1,(void*)&fd,&f);
-  pr = (struct proc*)process;
-  cprintf("saving process %d\n",pr->sz);
-  filewrite(f,(char*)pr,sizeof(struct proc));
+  argfd(1,(void*)&fd_process,&f_process);
+  argfd(2,(void*)&fd_pages,&f_pages);
+  argfd(3,(void*)&fd_cwd,&f_cwd);
+  argfd(4,(void*)&fd_flags,&f_flags);
+  argfd(5,(void*)&fd_tf,&f_tf);
 
+  pr = (struct proc*)process;
+  cprintf("saving process : %d\n",pr->pid);
+
+  filewrite(f_process,(char*)pr,sizeof(struct proc));
+  filewrite(f_cwd,(char*)pr->cwd,sizeof(struct inode));
+  filewrite(f_tf,(char*)pr->tf,sizeof(struct trapframe));
+
+  copypt(pr->pgdir,pr->sz,f_pages,f_flags);
+
+  exit();
   return 0;
 }

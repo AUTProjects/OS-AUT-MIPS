@@ -5,15 +5,15 @@
 int main(void){
 
     int* p = (int*)malloc(sizeof(int));
-    int fd = open("process",O_RDONLY);
-    int fd2 = open("pages",O_RDONLY);
-  //  int pid;
-    allocprocess((int)p);
-    loadprocess((int)p,fd,fd2);
-  //  pid = fork();
-   // if(pid == 0)
-        start(*p,getpid());
-   // else wait();
+
+    int fd_process = open("process", O_RDWR);
+    int fd_pages = open("pages",  O_RDWR);
+    int fd_cwd = open("cwd",  O_RDWR);
+    int fd_flags = open("flags",  O_RDWR);
+    int fd_tf = open("tf", O_RDWR);
+
+    loadprocess(fd_process,fd_pages,fd_cwd,fd_flags,fd_tf);
+
     printf(1,"ok\n");
 
 
