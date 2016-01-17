@@ -391,7 +391,6 @@ copypt(pde_t *pgdir, uint sz, struct file* f,struct file* f2)
   pte_t *pte;
   uint pa, i;
   int flags;
-  char* mem;
 
   if((d = setupkvm()) == 0)
     return 0;
@@ -403,9 +402,7 @@ copypt(pde_t *pgdir, uint sz, struct file* f,struct file* f2)
     pa = PTE_ADDR(*pte);
     cprintf("page %d : %d\n",i,pa);
     flags = PTE_FLAGS(*pte);
-    mem = kalloc();
-    memmove(mem,(char*)p2v(pa),PGSIZE);
-    filewrite(f,mem,PGSIZE);
+    filewrite(f,(char*)p2v(pa),PGSIZE);
     filewrite(f2,(char*)&flags, sizeof(uint));
 
   }
@@ -418,7 +415,7 @@ loadpt(struct file* pages_file, struct file* flags_file , uint size)
   pde_t *d;
   uint  i;
   char *mem;
-  int flag = 0;
+  uint flag ;
 
 
   if((d = setupkvm()) == 0)
@@ -426,11 +423,12 @@ loadpt(struct file* pages_file, struct file* flags_file , uint size)
   for(i = 0; i < size; i += PGSIZE){
     if((mem = kalloc()) == 0)
       goto bad;
-    fileread(pages_file,mem, sizeof(PGSIZE));
-    fileread(flags_file,(char*)flag, sizeof(uint));
-    if(mappages(d, (void*)i, PGSIZE, v2p(mem), (int)flag) < 0)
+    fileread(pages_file,mem, PGSIZE);
+    fileread(flags_file,(char*)&flag, sizeof(uint));
+    if(mappages(d, (void*)i, PGSIZE, v2p(mem), flag) < 0)
       goto bad;
   }
+  cprintf("page table loaded\n");
   return d;
 
   bad:

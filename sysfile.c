@@ -450,6 +450,8 @@ int sys_loadprocess(void){
   int fd_tf ;
   int fd_context;
 
+  cprintf("%d-%d-%d-%d-%d\n",fd_process,fd_pages,fd_flags,fd_tf,fd_context);
+
   int process;
 
   struct file* f_process;
@@ -466,11 +468,11 @@ int sys_loadprocess(void){
   argfd(4,(void*)&fd_tf,&f_tf);
   argfd(5,(void*)&fd_context,&f_context);
 
-   struct  proc* pr = (struct proc*)process;
+   struct  proc pr;
 
-  fileread(f_process,(char*)pr,sizeof(struct proc));
+  fileread(f_process,(char*)&pr,sizeof(struct proc));
 
-  cprintf("loading process : %d\n",pr->pid);
+  cprintf("loading process : %d\n",pr.pid);
 
   struct trapframe tf;
   fileread(f_tf,(char*)&tf,sizeof(struct trapframe));
@@ -478,13 +480,26 @@ int sys_loadprocess(void){
   struct context cn;
   fileread(f_context,(char*)&cn,sizeof(struct context));
 
-  pr->pgdir = loadpt( f_pages, f_flags, f_pages->ip->size);
-  *pr->tf = tf;
-  *pr->context = cn;
+  pr.pgdir = loadpt( f_pages, f_flags, f_pages->ip->size);
+  *pr.tf = tf;
+  *pr.context = cn;
 
-  cprintf("process loaded\n");
+  cprintf("process loaded %s\n",pr.name);
+  start(&pr);
 
-  return (int)pr;
+  proc->ofile[fd_process] = 0;;
+  proc->ofile[fd_pages] = 0;
+  proc->ofile[fd_context] = 0;
+  proc->ofile[fd_flags ] = 0;
+  proc->ofile[fd_tf ] = 0;
+
+  fileclose(f_process);
+  fileclose(f_pages);
+  fileclose(f_context);
+  fileclose(f_flags);
+  fileclose(f_tf);
+
+  return  0;
 }
 
 int sys_savept(void){
@@ -521,7 +536,7 @@ int sys_saveprocess(void){
   struct file* f_flags;
   struct file* f_tf;
 
-  struct proc* pr;
+
 
   argint(0,&process);
   argfd(1,(void*)&fd_process,&f_process);
@@ -530,31 +545,29 @@ int sys_saveprocess(void){
   argfd(4,(void*)&fd_flags,&f_flags);
   argfd(5,(void*)&fd_tf,&f_tf);
 
-  pr = (struct proc*)process;
-  cprintf("saving process : %d\n",pr->pid);
 
-  filewrite(f_process,(char*)pr,sizeof(struct proc));
-  filewrite(f_context,(char*)pr->cwd,sizeof(struct context));
-  filewrite(f_tf,(char*)pr->tf,sizeof(struct trapframe));
+  cprintf("saving process : %d\n",proc->pid);
 
-  copypt(pr->pgdir,pr->sz,f_pages,f_flags);
+  filewrite(f_process,(char*)proc,sizeof(struct proc));
+  filewrite(f_context,(char*)proc->context,sizeof(struct context));
+  filewrite(f_tf,(char*)proc->tf,sizeof(struct trapframe));
 
-  pr->ofile[1] = 0;
-  pr->ofile[2] = 0;
-  pr->ofile[3] = 0;
-  pr->ofile[4] = 0;
-  pr->ofile[5] = 0;
-  pr->ofile[6] = 0;
-  pr->ofile[7] = 0;
-  pr->ofile[8] = 0;
-  pr->ofile[9] = 0;
-  pr->ofile[10] = 0;
-  pr->ofile[11] = 0;
-  pr->ofile[12] = 0;
-  pr->ofile[13] = 0;
-  pr->ofile[14] = 0;
-  pr->ofile[15] = 0;
-  pr->ofile[16] = 0;
+  copypt(proc->pgdir,proc->sz,f_pages,f_flags);
+
+  proc->ofile[fd_process] = 0;
+  proc->ofile[fd_pages] = 0;
+  proc->ofile[fd_context] = 0;
+  proc->ofile[fd_flags ] = 0;
+  proc->ofile[fd_tf ] = 0;
+
+  fileclose(f_process);
+  fileclose(f_pages);
+  fileclose(f_context);
+  fileclose(f_flags);
+  fileclose(f_tf);
+
+
+
 
   exit();
   return 0;

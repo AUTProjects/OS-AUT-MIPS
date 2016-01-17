@@ -111,11 +111,3 @@ int sys_alloc(void)
 
   return allocprocess();
 }
-
-int sys_start(void){
-  int pr;
-  int pid;
-  argint(0,&pr);
-  argint(1,&pid);
-  return start(pr,pid);
-}

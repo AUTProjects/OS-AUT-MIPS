@@ -476,7 +476,7 @@ int find(int pid, int adr){
   int* adress = (int*)adr;
   acquire(&ptable.lock);
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-    if(p->parent->pid == pid){
+    if(p->pid == pid){
       *adress = (int)p;
       release(&ptable.lock);
       cprintf("process found \nprocess name : %s\nprocess pid : %d\nprocess sz : %d\nprocess paget : %d\n",
@@ -500,10 +500,9 @@ int allocprocess(){
 
 
 int
-start( int p,int p2)
+start( struct  proc* pr)
 {
   int i,pid;
-  struct  proc* pr = (struct proc*)p;
   struct  proc* np = allocproc();
 
   *np->context = *pr->context;
@@ -514,12 +513,11 @@ start( int p,int p2)
   *np->tf = *pr->tf;
   np->tf->eax = 0;
 
-  cprintf("start restore process");
   for(i = 0; i < NOFILE; i++) {
-    np->ofile[i] = filedup(proc->ofile[i]);
-    if(proc->ofile[i]) {
-    }
+    if(pr->ofile[i])
+    np->ofile[i] = filedup(pr->ofile[i]);
   }
+
 
   safestrcpy(np->name,pr->name, sizeof(pr->name));
   pid = np->pid;
@@ -527,6 +525,8 @@ start( int p,int p2)
   acquire(&ptable.lock);
   np->state = RUNNABLE;
   release(&ptable.lock);
+
+  cprintf("start restore process\n");
 
   return pid;
 }

@@ -122,7 +122,7 @@ void            wakeup(void*);
 void            yield(void);
 int      		find(int,int);
 int             allocprocess();
-int             start(int,int);
+int             start(struct proc*);
 
 // swtch.S
 void            swtch(struct context**, struct context*);
